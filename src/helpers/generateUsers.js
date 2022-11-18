@@ -1,6 +1,5 @@
 import fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
-// import { User } from '../models/User.js';
 
 const namesFile = new URL('../data/names.json', import.meta.url);
 
@@ -23,26 +22,29 @@ function generateBoolean() {
   return getRndInteger(2, 10) > 2;
 }
 
-function getRndId(users, currentUserId) {
+function getRndId(users) {
   const index = getRndInteger(0, users.length - 1);
   const { userId } = users[index];
-
-  if (userId === currentUserId) {
-    getRndId(users, currentUserId);
-  }
 
   return userId;
 }
 
 function getIds(users, currentUserId) {
-  const length = generateBoolean() ? getRndInteger(0, users.length) : 0;
-  const ids = Array.from({ length }, () => getRndId(users, currentUserId));
+  const length = generateBoolean() ? getRndInteger(0, users.length - 1) : 0;
+  const ids = [];
+
+  while(ids.length < length){
+    const id = getRndId(users);
+
+    if(ids.indexOf(id) === -1 && id !== currentUserId) {
+      ids.push(id);
+    }
+  }
 
   return ids;
 }
 
-function preGenerateUsers(from, to) {
-  const length = getRndInteger(from, to);
+function preGenerateUsers(length) {
   const users = Array.from({ length }, () => ({
     userId: uuidv4(),
     first_name: getName(),
@@ -52,8 +54,8 @@ function preGenerateUsers(from, to) {
   return users;
 }
 
-export function generateUsers(from = 100, to = 200) {
-  const simpleUsers = preGenerateUsers(from, to);
+export function generateUsers(length = 200) {
+  const simpleUsers = preGenerateUsers(length);
 
   const preparedUsers = simpleUsers.map(user => ({
     ...user,

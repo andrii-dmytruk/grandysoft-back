@@ -12,5 +12,7 @@ router.get('/test', (req, res) => {
 });
 
 router.get('/reset', (req, res) => {
-  resetDB().then(() => res.send('Reset successfully!'));
+  const usersCount = req.query.usersCount || 200;
+
+  resetDB(usersCount).then(() => res.send('Reset table with users count: ' + usersCount));
 });
