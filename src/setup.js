@@ -1,5 +1,6 @@
-import { sequelize } from './utils/db.js';
 import './models/User.js';
 import 'dotenv/config';
+import { resetDB } from './utils/resetDB.js';
 
-sequelize.sync({ force: true }).catch(err => console.log(err));
+
+resetDB();

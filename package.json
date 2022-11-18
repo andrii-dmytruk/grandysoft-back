@@ -26,7 +26,8 @@
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "pg-promise": "^10.15.0",
-    "sequelize": "^6.25.6"
+    "sequelize": "^6.25.6",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "eslint": "^8.27.0",

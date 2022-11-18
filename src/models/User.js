@@ -2,6 +2,10 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../utils/db.js';
 
 export const User = sequelize.define('user', {
+  userId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   first_name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -11,10 +15,7 @@ export const User = sequelize.define('user', {
     allowNull: false,
   },
   following: {
-    type: DataTypes.ARRAY(DataTypes.INTEGER),
-  },
-  followers: {
-    type: DataTypes.ARRAY(DataTypes.INTEGER),
+    type: DataTypes.ARRAY(DataTypes.STRING),
   },
 },
 {
