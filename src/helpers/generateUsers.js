@@ -30,7 +30,7 @@ function getRndId(users) {
 }
 
 function getIds(users, currentUserId) {
-  const length = generateBoolean() ? getRndInteger(0, users.length - 1) : 0;
+  const length = generateBoolean() ? getRndInteger(1, 150) : 0;
   const ids = [];
 
   while(ids.length < length){

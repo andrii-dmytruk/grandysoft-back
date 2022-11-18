@@ -20,5 +20,5 @@ function bubbleSort(arr, n, k){
 }
 
 export function getTopFollowing(users, k = 5) {
-  return bubbleSort(users, users.length, k).slice(-k);
+  return bubbleSort(users, users.length, k).slice(-k).reverse();
 }

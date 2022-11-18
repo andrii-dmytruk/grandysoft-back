@@ -5,6 +5,10 @@ import { resetDB } from '../utils/resetDB.js';
 export const router = express.Router();
 
 router.get('/users', UsersController.getAllUsers);
+router.get('/users/:id', UsersController.getOneUser);
+router.get('/users/:id/friends', UsersController.getUserFriends);
+router.get('/max-following', UsersController.getMaxFollowing);
+router.get('/not-following', UsersController.getNotFollowing);
 
 
 router.get('/test', (req, res) => {
