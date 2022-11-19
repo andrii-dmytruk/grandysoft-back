@@ -1,7 +1,4 @@
-import { getTopFollowing } from '../helpers/getTopFollowing.js';
-import { getZeroFollowing } from '../helpers/getZeroFollowing.js';
 import { UsersService } from '../services/users.js';
-import { sortUsers } from '../helpers/sortUsers.js';
 
 function getAllUsers(req, res) {
   UsersService.getAll()
@@ -15,12 +12,11 @@ function getAllUsers(req, res) {
 }
 
 function getMaxFollowing(req, res) {
-  const count = req.query.count || 5;
+  const usersCount = req.query.usersCount || 5;
 
-  UsersService.getAll()
+  UsersService.getTopFollowing(usersCount)
     .then(users => {
-      const usersFromDB = users;
-      res.send(getTopFollowing(usersFromDB, count));
+      res.send(users);
     })
     .catch(err => {
       console.log('Loading max users following failed: ' + err.message);
@@ -29,10 +25,9 @@ function getMaxFollowing(req, res) {
 }
 
 function getNotFollowing(req, res) {
-  UsersService.getAll()
+  UsersService.getZeroFollowing()
     .then(users => {
-      const usersFromDB = users;
-      res.send(getZeroFollowing(usersFromDB));
+      res.send(users);
     })
     .catch(err => {
       console.log('Loading users not following failed: ' + err.message);
@@ -61,14 +56,11 @@ function getOneUser(req, res) {
 function getUserFriends(req, res) {
   const id = req.params.id;
 
-  const { order_by, order_type = 'desc' } = req.query;
+  const { order_by = 'id', order_type = 'asc' } = req.query;
 
-  UsersService.getFriends(id)
+  UsersService.getFriends(id, order_by, order_type)
     .then(friends => {
       if (friends) {
-        if (order_by) {
-          friends = sortUsers(friends, order_by, order_type);
-        }
         res.send(friends);
         return;
       }
@@ -76,7 +68,7 @@ function getUserFriends(req, res) {
       res.sendStatus(404);
     })
     .catch(err => {
-      console.log('Loading one user failed: ' + err.message);
+      console.log('Loading friends failed: ' + err.message);
       res.sendStatus(400);
     });
 }

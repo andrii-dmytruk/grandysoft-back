@@ -10,11 +10,6 @@ router.get('/users/:id/friends', UsersController.getUserFriends);
 router.get('/max-following', UsersController.getMaxFollowing);
 router.get('/not-following', UsersController.getNotFollowing);
 
-
-router.get('/test', (req, res) => {
-  res.json();
-});
-
 router.get('/reset', (req, res) => {
   const usersCount = req.query.usersCount || 200;
 
